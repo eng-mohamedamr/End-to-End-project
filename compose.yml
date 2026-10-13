@@ -1,0 +1,46 @@
+version: '3.8'
+services:
+  frontend:
+    build:
+      context: ./frontend
+    ports:
+      - "3000:8080"
+    environment:
+      - BACKEND_URL=http://backend:8000
+    networks:
+      - front-back
+  backend:
+    build:
+      context: ./backend
+      args:
+        APP_VERSION: dev
+    ports:
+      - "8000:8000"
+    environment:
+      - APP_VERSION=dev
+      - ENVIRONMENT=development
+      - DB_HOST=DB
+      - DB_PORT=5432
+      - DB_NAME=mydatabase
+      - DB_USER=myuser
+      - DB_PASSWORD=test
+    networks:
+      - front-back
+      - back-DB
+  DB:
+    image: postgres:17
+    environment:
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: test
+      POSTGRES_DB: mydatabase
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    networks:
+      - back-DB
+  volume:
+    db_data:
+  networks:
+    front-back:
+    back-DB:
