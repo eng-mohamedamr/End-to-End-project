@@ -9,6 +9,9 @@ services:
       - BACKEND_URL=http://backend:8000
     networks:
       - front-back
+    depends_on:
+      - backend
+      - DB  
   backend:
     build:
       context: ./backend
@@ -27,6 +30,8 @@ services:
     networks:
       - front-back
       - back-DB
+    depends_on:
+      - DB
   DB:
     image: postgres:17
     environment:
@@ -39,8 +44,8 @@ services:
       - db_data:/var/lib/postgresql/data
     networks:
       - back-DB
-  volume:
+volumes:
     db_data:
-  networks:
-    front-back:
-    back-DB:
+networks:
+  front-back:
+  back-DB:
