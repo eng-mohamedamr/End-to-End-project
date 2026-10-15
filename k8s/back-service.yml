@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: back-service
+  namespace: nti
+spec:
+  selector:
+    App: back
+  ports:
+  - port: 8000
+    targetPort: 8000

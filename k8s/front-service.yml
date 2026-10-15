@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: front-service
+  namespace: nti
+spec:
+  selector:
+    App: front
+  ports:
+  - port: 3000
+    targetPort: 8080

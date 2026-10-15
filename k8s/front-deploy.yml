@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: front-deploy
+  labels:
+    App: front
+  namespace: nti
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      App: front
+  template:
+    metadata:
+      labels:
+        App: front
+    spec:
+      containers:
+        - name: front
+          image: mohamedamr443/project-nti-frontend:v1
+          ports:
+            - containerPort: 8080
+          env:
+            - name: BACKEND_URL
+              value: http://back-service:8000
+
+        
+
+            

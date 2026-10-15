@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: back-deploy
+  labels:
+    App: back
+  namespace: nti
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      App: back
+  template:
+    metadata:
+      labels:
+        App: back
+    spec:
+      containers:
+        - name: back
+          image: mohamedamr443/project-nti-backend:v1
+          ports:
+            - containerPort: 8000
+          envFrom:
+            - configMapRef:
+                name: config-map
+            - secretRef:
+                name: mysecret
+            

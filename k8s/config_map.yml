@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: config-map
+  namespace: nti
+data:
+  DB_HOST: postgres
+  DB_PORT: "5432"
+  DB_NAME: mydatabase
+  DB_USER: myuser
+  APP_VERSION: dev
+  ENVIRONMENT: development
