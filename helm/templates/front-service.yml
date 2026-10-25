@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: front-service
+  namespace: {{.Values.namespace}}
+spec:
+  selector:
+    app: {{ .Values.labels.front_label }}
+  ports:
+  - port: {{.Values.service.front_port}}
+    targetPort: 8080

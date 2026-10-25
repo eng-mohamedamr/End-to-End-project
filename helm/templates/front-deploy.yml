@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-front-deploy
+  labels:
+    app: {{ .Values.labels.front_label }}
+  namespace: {{.Values.namespace}}
+spec:
+  replicas: {{.Values.replicaCount}}
+  selector:
+    matchLabels:
+      app: {{ .Values.labels.front_label }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.labels.front_label }}
+    spec:
+      containers:
+        - name: front
+          image: {{.Values.image.front_image}}
+          ports:
+            - containerPort: 8080
+          env:
+            - name: BACKEND_URL
+              value: http://back-service:8000
+
+        
+
+            

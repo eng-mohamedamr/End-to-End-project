@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-back-deploy
+  labels:
+    app: {{ .Values.labels.back_label }}
+  namespace: {{.Values.namespace}}
+spec:
+  replicas: {{.Values.replicaCount}}
+  selector:
+    matchLabels:
+      app: {{ .Values.labels.back_label }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.labels.back_label }}
+    spec:
+      containers:
+        - name: back
+          image: {{.Values.image.back_image}}
+          ports:
+            - containerPort: 8000
+          envFrom:
+            - configMapRef:
+                name: config-map
+            - secretRef:
+                name: mysecret
+            
