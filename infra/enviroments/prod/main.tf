@@ -1,3 +1,14 @@
+module "bootstrap" {
+  source = "../../bootstrap"
+
+  frontend_bucket_name = var.fronend_bucket_name
+
+  backend_ecr_repository_name = var.backend_ecr_repository_name
+
+  github_repository = var.github_repository
+
+  github_branch = var.github_branch
+}
 module "network" {
   source = "../../modules/network"
 
@@ -14,7 +25,7 @@ module "network" {
 }
 
 module "eks" {
-  source = "../../modules/eks"
+  source = "../../modules/EKS"
 
   cluster_name       = "taskboard"
   
@@ -29,4 +40,16 @@ module "eks" {
   desired_size = 2
   min_size     = 1
   max_size     = 3
+}
+module "ecr" {
+  source = "../../modules/ECR"
+
+  repository_names = [
+    "taskboard-backend"
+  ]
+}
+module "frontend_s3" {
+  source = "../../modules/frontend-s3"
+
+  bucket_name = var.fronend_bucket_name
 }
